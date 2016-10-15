@@ -13,6 +13,8 @@ RUN apt-get install -y git
 
 RUN apt-get update && apt-get install -y \
   curl \
+  tmux \
+  tmuxinator \
   git \
   vim \
   vim-pathogen \
@@ -43,7 +45,13 @@ RUN git config --global credential.helper 'cache --timeout=3600'
 RUN git config --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".insteadOf ssh://git@github.com/
 RUN git config --add --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".insteadOf git@github.com:
 
+# Configure HOME dotfiles
+RUN git clone --single-branch git@github.com:tomasperezv/configuration.git
+RUN cd configuration && sh init.sh
+
 # Configure VIM
 RUN git clone --single-branch https://github.com/tomasperezv/vim-is-great.git
 RUN cd vim-is-great && sh setup.sh && sh update-home-vim.sh
 RUN ln -s /home/t/vim /home/t/.vim
+
+ENTRYPOINT tmuxinator start
