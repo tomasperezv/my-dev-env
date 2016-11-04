@@ -48,12 +48,15 @@ RUN git config --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".
 RUN git config --add --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".insteadOf git@github.com:
 
 # Configure HOME dotfiles
-RUN git clone --single-branch git@github.com:tomasperezv/configuration.git
+RUN git clone --depth 1 --single-branch git@github.com:tomasperezv/configuration.git
 RUN cd configuration && sh init.sh
 
 # Configure VIM
-RUN git clone --single-branch https://github.com/tomasperezv/vim-is-great.git
+RUN git clone --depth 1 --single-branch https://github.com/tomasperezv/vim-is-great.git
 RUN cd vim-is-great && sh setup.sh && sh update-home-vim.sh
 RUN ln -s /home/t/vim /home/t/.vim
+
+# Clone my-dev-env
+RUN git clone --depth 1 --single-branch https://github.com/tomasperezv/my-dev-env.git
 
 ENTRYPOINT tmuxinator start dev-base
