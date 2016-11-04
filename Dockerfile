@@ -13,6 +13,8 @@ RUN apt-get install -y git
 
 RUN apt-get update && apt-get install -y \
   curl \
+  bash-completion \
+  keygen \
   tmux \
   tmuxinator \
   git \
@@ -54,4 +56,4 @@ RUN git clone --single-branch https://github.com/tomasperezv/vim-is-great.git
 RUN cd vim-is-great && sh setup.sh && sh update-home-vim.sh
 RUN ln -s /home/t/vim /home/t/.vim
 
-ENTRYPOINT tmuxinator start
+ENTRYPOINT tmuxinator start dev-base
