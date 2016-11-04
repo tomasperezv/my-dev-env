@@ -8,8 +8,8 @@ Configuration for a Docker image that contains my development environment.
 docker build . --no-cache --build-arg GITHUB_USERNAME=[USERNAME] --build-arg GITHUB_TOKEN=[TOKEN] --build-arg GITHUB_EMAIL=[GITHUB_EMAIL] --build-arg GITHUB_NAME=[GITHUB_NAME]
 ```
 
-## Run vim
+## Run the container
 
 ```
-docker run -ti [IMAGE_UUID] vim
+docker run -e TERM=$TERM -ti [IMAGE_UUID]
 ```
