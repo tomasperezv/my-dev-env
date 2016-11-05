@@ -38,6 +38,9 @@ RUN echo "t ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 USER t
 WORKDIR /home/t
 
+# Development environment folder
+RUN mkdir /home/t/dev
+
 # Configure git
 RUN git config --global user.email $GITHUB_EMAIL
 RUN git config --global user.name $GITHUB_NAME
@@ -58,5 +61,8 @@ RUN ln -s /home/t/vim /home/t/.vim
 
 # Clone my-dev-env
 RUN git clone --depth 1 --single-branch https://github.com/tomasperezv/my-dev-env.git
+
+# Configure timezone
+RUN echo Europe/Madrid | sudo tee /etc/timezone && sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 ENTRYPOINT tmuxinator start dev-base
